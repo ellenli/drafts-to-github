@@ -6,9 +6,10 @@ What I use to sync notes from Drafts.app as `.md` files on GitHub. From [Alexand
 1. Clone/copy `action.js` and edit config variables
 2. Add in Drafts.app > `Actions` menu > `Manage Actions` > `Basic` > `+` > `Add Action`
 3. `Add Steps` > `Step Type` > Select `Script` (it's at the bottom of the list under `Advanced`) > `+`
-4. Click the script, `Import`, select `action.js`, add optional shortcut (mine is `^` + `S`), `Save`
-5. Get [a personal access token](https://github.com/settings/tokens) with `repo` scopes
-6. Run action from `Actions` menu, enter token at initial run
+4. Click the script, `Import`, select `action.js`
+5. Optional but recommended: add a keyboard shortcut; mine is <kbd>control</kbd> <kbd>S</kbd>, `Save`
+6. Get [a personal access token](https://github.com/settings/tokens) with `repo` scopes
+7. Run action from `Actions` menu, enter token at initial run
 
 ## To do
 - [x] Export to whatever directory (thanks Alexander)
