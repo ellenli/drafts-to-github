@@ -1,20 +1,20 @@
 /*
-  Sync a note from Drafts.app as .md file in GitHub repo
-  From @piranha, https://actions.getdrafts.com/a/105
-
+  Automate publishing from Drafts to GitHub!
+  https://github.com/ellenli/drafts-to-github
+  
+  Original script by Alexander Solovyov
+  https://solovyov.net/blog/2020/blog-workflow/
+  
   To configure, edit REPO, SOURCE, PATH and SITE. All of them are subject to
   string formatting, so you can use following macros for dynamic URL generation:
   * {year} - four-digit year
   * {month} - two digit month (from 01 to 12)
   * {day} - two digit day (from 01 to 31)
-  
-  Requires a personal access token with full repo scopes:
-  https://github.com/settings/tokens
 */
 
 /* Configuration */
 
-// Repository name on Github (private repo OK)
+// Repository name on Github
 var REPO = 'ellenli/notes';
 // Where should the file be saved, directory inside repository with site sources
 var SOURCE = '';
@@ -49,14 +49,16 @@ function format(s, data) {
   });
 }
 
-// TODO: translit?
+
 function getSlug(content) {
   var slug = content.match(/^slug: (.*)$/m);
   if (slug)
     return slug[1];
   var title = content.match(/^title: (.*)$/m);
   if (!title)
-    throw 'Unknown title!';
+  		 var title = content.match(/^# (.*)$/m);
+  if (!title)
+      throw 'Unknown title!';
   var slug = (title[1]
               .toLowerCase()
               .replace(/[^a-z0-9]+/g, '-')
@@ -100,7 +102,8 @@ function main() {
   var slug = getSlug(content);
 
   var url = urlformat(BASE, REPO, 'contents', SOURCE, PATH, '{year}-{month}-{day}-' + slug + '.md');
-
+  // filename: (?<=\/)[^\/\?#]+(?=[^\/]*$)
+    
   var b64 = Base64.encode(content);
 
   var res = req('GET', url, null);
@@ -113,14 +116,14 @@ function main() {
 
   } else if (res.statusCode == 200) {
     res = req('PUT', url, {
-      message: 'Update via Drafts.app: ' + '{year}-{month}-{day}-' + slug + '.md'),
+      message: 'Update via Drafts: ' + slug,
       content: b64,
       sha: res.data.sha
     });
 
   } else {
     res = req('PUT', url, {
-      message: 'New via Drafts.app: ' + '{year}-{month}-{day}-' + slug + '.md'),
+      message: 'New via Drafts: ' + slug,
       content: b64
     });
   }
