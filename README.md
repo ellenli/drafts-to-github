@@ -12,7 +12,7 @@ What I use to sync notes from Drafts.app as `.md` files on GitHub. From [Alexand
 
 ## To do
 - [x] Export to whatever directory (thanks Alexander)
-- [ ] Use tags to make smarter .md exports
+- [ ] Use Drafts.app tags to automate publishing workflows
     - [ ] Export to different repos/paths
     - [ ] Add yaml/metadata e.g. `layout`, `tags`, etc
-- Publishing workflow, update `post-list` etc
+    - [ ] Update `post-list`, `archive`, etc
