@@ -22,9 +22,13 @@ var SOURCE = '';
 var SITE = '';
 // Path inside source directory *AND* path on site. NOTE: Should they be different?..
 var PATH = '';
+// The account owner of the repository. The name is not case sensitive.
+var OWNER = '';
 
 // Github API base
 var BASE = 'https://api.github.com/repos';
+
+// URL to build: {BASE}/{OWNER}/repos/{REPO}/{SOURCE}/{PATH}
 
 
 /* Connection */
@@ -101,7 +105,7 @@ function main() {
   var content = draft.content;
   var slug = getSlug(content);
 
-  var url = urlformat(BASE, REPO, 'contents', SOURCE, PATH, '{year}-{month}-{day}-' + slug + '.md');
+  var url = urlformat(BASE, OWNER, REPO, 'contents', SOURCE, PATH, '{year}-{month}-{day}-' + slug + '.md');
   // filename: (?<=\/)[^\/\?#]+(?=[^\/]*$)
     
   var b64 = Base64.encode(content);
